@@ -13,7 +13,7 @@ This project builds an automated data pipeline for NYC taxi trip data using an E
 
 The pipeline follows an ETL workflow:
 
-![image.png](images/image1.png)
+![image.png](images/image.png)
 
 
 ## **Technology stack**
