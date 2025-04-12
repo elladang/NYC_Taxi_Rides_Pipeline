@@ -1,0 +1,46 @@
+services:
+  ny_taxi:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ny_taxi
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data     
+
+  apache_airflow:
+    build: 
+      context: ./dags
+      dockerfile: Dockerfile
+    environment:
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@ny_taxi:5432/ny_taxi
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DB_UPGRADE=True
+      - AIRFLOW__WEBSERVER__WORKERS=2
+      - AIRFLOW__SMTP__SMTP_PASSWORD=/var/tmp/secret/smtp.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/var/tmp/secret/gcp_sa.json
+      - GCP_PROJECT_ID=trangdang
+      - GCS_BUCKET_NAME=ny_taxi_raw_data
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./output:/var/tmp
+      - ./dbt:/var/tmp
+      - ./secret_key:/var/tmp/secret
+      - ./modules:/opt/airflow/modules
+
+    ports:
+      - 8080:8080
+    # depends_on:
+    #   - ny_taxi 
+    command: >
+      bash -c "airflow db init && airflow users create --username admin --password admin --firstname trang --lastname dang --role Admin --email trangdangngoc0707@gmail.com && airflow webserver & airflow scheduler"
+    
+volumes:
+  dags:
+  postgres_data:
+  dbt:
+  modules:
+

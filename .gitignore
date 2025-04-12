@@ -396,3 +396,13 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+profiles.yml
+config/
+logs/
+package-lock.yml
+dbt_packages/
+user.yml
+target/
+secret_key/
+user.yml
+secret/
