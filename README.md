@@ -9,6 +9,12 @@ This project builds an automated data pipeline for NYC taxi trip data using an E
 - Load into GCS and BigQuery.
 - Model data with dbt into staging, dimension, and fact tables.
 - Schedule daily runs with Airflow, supporting backfills.
+## Architecture 🏗️
+
+The pipeline follows an ETL workflow:
+
+![image.png](images/image1.png)
+
 
 ## **Technology stack**
 
@@ -47,13 +53,6 @@ Data is in Parquet/CSV format, using a January 2021 subset, but the pipeline is 
 ### Dependencies
 
 - Includes apache-airflow[postgres], pandas, pyarrow, google-cloud-storage, selenium, and others for Airflow, BigQuery, and data processing.
-
-
-## Architecture 🏗️
-
-The pipeline follows an ETL workflow:
-
-![image.png](images/image1.png)
 
 
 ## Directory Structure 📁
