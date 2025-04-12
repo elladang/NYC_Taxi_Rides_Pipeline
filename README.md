@@ -31,7 +31,6 @@ This project builds an automated data pipeline for NYC taxi trip data using an E
 
 Data is in Parquet/CSV format, using a January 2021 subset, but the pipeline is designed to scale for larger datasets.
 
----
 
 ## Setup and Dependencies ⚙️
 
@@ -49,15 +48,13 @@ Data is in Parquet/CSV format, using a January 2021 subset, but the pipeline is 
 
 - Includes apache-airflow[postgres], pandas, pyarrow, google-cloud-storage, selenium, and others for Airflow, BigQuery, and data processing.
 
----
 
 ## Architecture 🏗️
 
 The pipeline follows an ETL workflow:
 
-![image.png](image1.png)
+![image.png](images/image1.png)
 
----
 
 ## Directory Structure 📁
 
@@ -110,19 +107,18 @@ PERSONAL_PROJECT/
 └── docker-compose.yml
 ```
 
----
 
 ## Airflow Pipeline
 
 The pipeline is orchestrated by Airflow using two DAGs: ny_taxi_dag.py for the ETL process and dbt_airflow_dag.py for dbt tasks. 
 
-![image.png](image2.png)
+![image.png](images/image2.png)
 
-![image.png](image3.png)
+![image.png](images/image3.png)
 
-![image.png](image4.png)
+![image.png](images/image4.png)
 
-![image.png](image5.png)
+![image.png](images/image5.png)
 
 1. **Extract Group (extract_group)**
     - **Tasks**: load_green, load_yellow, load_zone.
@@ -149,7 +145,6 @@ The pipeline is orchestrated by Airflow using two DAGs: ny_taxi_dag.py for the E
         - Dimension: dim_date, dim_service, dim_location.
         - Fact: fact_trips.
 
----
 
 ## Data Models with dbt 🗃️
 
@@ -157,13 +152,13 @@ dbt models in dbt/models, split into staging and marts.
 
 ### Data Model Schema 📊
 
-![image.png](image6.png)
+![image.png](images/image6.png)
 
 ### Staging Models
 
 These models clean and standardize the raw data loaded into BigQuery.
 
-![image.png](image7.png)
+![image.png](images/image7.png)
 
 ### 1. stg_green_tripdata
 
@@ -208,7 +203,7 @@ These models clean and standardize the raw data loaded into BigQuery.
 
 These models create dimension tables for the Star Schema.
 
-![image.png](image8.png)
+![image.png](images/image8.png)
 
 ### 1. dim_date
 
@@ -289,7 +284,6 @@ These models create dimension tables for the Star Schema.
 - Partitioning: On pickup_date_id.
 - Clustering: On service_id, pickup_location_id.
 
----
 
 ## Performance Optimization ⚡
 
@@ -299,7 +293,6 @@ These models create dimension tables for the Star Schema.
     - Clustering: Minimizes data scanning.
     - Materialized Views: Precompute aggregations.
 
----
 
 ## Sample Analytical Query 🔍
 
